@@ -11,7 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import { useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Property } from '../../libs/types/property/property';
 import moment from 'moment';
@@ -27,6 +27,9 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
+import { T } from '../../libs/types/common';
+import { Direction } from '../../libs/enums/common.enum';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -54,9 +57,50 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	});
 
 	/** APOLLO REQUESTS **/
+	const {
+		loading: getPropertyLoading,
+		data: getPropertyData,
+		error: getPropertyError,
+		refetch: getPropertyRefetch,
+	} = useQuery(GET_PROPERTY, {
+		fetchPolicy: "cache-and-network",
+		variables: {input: propertyId },
+		skip: !propertyId,
+		 notifyOnNetworkStatusChange: true,
+		 onCompleted:(data:T)=> {
+			if (data?.getProperty) setProperty(data?.getProperty)
+			if(data?.getProperty) setSlideImage(data?.getProperty?.propertyImages[0])
+		 },
+	})
+
+
+	const {
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: "cache-and-network",
+		variables: {input: 
+			{
+				page: 1,
+				limit: 4 ,
+				sort : "createdAt",
+				direction: Direction.DESC,
+				search: {
+					locationList : [property?.propertyLocation],
+				},
+			},
+		},
+		skip: !propertyId && !property,
+		notifyOnNetworkStatusChange: true,
+		onCompleted:(data:T)=> {
+			if (data?.getProperties?.list) setDestinationProperty(data?.getProperties?.list)
+		 },
+	})
 
 	/** LIFECYCLES **/
-	useEffect(() => {
+	useEffect(() => { 
 		if (router.query.id) {
 			setPropertyId(router.query.id as string);
 			setCommentInquiry({

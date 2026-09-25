@@ -15,10 +15,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 interface CommunityCardProps {
 	boardArticle: BoardArticle;
 	size?: string;
+	likeArticleHandler?: (user: any, id: string) => void;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-	const { boardArticle, size = 'normal' } = props;
+	const { boardArticle, size = 'normal', likeArticleHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -42,6 +43,12 @@ const CommunityCard = (props: CommunityCardProps) => {
 		if (id === user?._id) router.push('/mypage');
 		else router.push(`/member?memberId=${id}`);
 	};
+	const handleLikeClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (likeArticleHandler) {
+			likeArticleHandler(user, boardArticle?._id);
+		}
+	};
 
 	if (device === 'mobile') {
 		return <div>COMMUNITY CARD MOBILE</div>;
@@ -50,7 +57,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 			<Stack
 				sx={{ width: size === 'small' ? '285px' : '317px' }}
 				className="community-general-card-config"
-				onClick={(e) => chooseArticleHandler(e, boardArticle)}
+				onClick={(e : any) => chooseArticleHandler(e, boardArticle)}
 			>
 				<Stack className="image-box">
 					<img src={imagePath} alt="" className="card-img" />
@@ -59,7 +66,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<Stack>
 						<Typography
 							className="desc"
-							onClick={(e) => {
+							onClick={(e : any) => {
 								e.stopPropagation();
 								goMemberPage(boardArticle?.memberData?._id as string);
 							}}
@@ -69,7 +76,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<Typography className="title">{boardArticle?.articleTitle}</Typography>
 					</Stack>
 					<Stack className={'buttons'}>
-						<IconButton color={'default'}>
+						<IconButton color={'default'} onClick={handleLikeClick}>
 							<RemoveRedEyeIcon />
 						</IconButton>
 						<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>

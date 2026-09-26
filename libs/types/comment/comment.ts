@@ -17,6 +17,6 @@ export interface Comment {
 }
 
 export interface Comments {
-	list: Comment[];
+	list: [Comment];
 	metaCounter: TotalCounter[];
 }

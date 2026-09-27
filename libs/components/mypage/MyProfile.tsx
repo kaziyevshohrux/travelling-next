@@ -9,8 +9,7 @@ import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
-import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
-import { Message } from '../../enums/common.enum';
+import { sweetMixinSuccessAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -19,8 +18,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const [updateData, setUpdateData] = useState<MemberUpdate>(initialValues);
 
 	/** APOLLO REQUESTS **/
-	const [updateMember] = useMutation(UPDATE_MEMBER)
-
+	const [updateMember] = useMutation(UPDATE_MEMBER);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -81,19 +79,23 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 	const updatePropertyHandler = useCallback(async () => {
 		try {
+			if (!user._id) throw new Error(Messages.error2);
+			updateData._id = user._id;
 			const result = await updateMember({
 				variables: {
 					input: updateData,
 				},
 			});
 
-			userVar(result.data.updateMember);
-			await sweetMixinSuccessAlert('Profile updated successfully!');
+			// @ts-ignore
+			const jwtToken = result.data.updateMember?.accessToken;
+			await updateStorage({ jwtToken });
+			updateUserInfo(result.data.updateMember?.accessToken);
+			await sweetMixinSuccessAlert('information updated successfully.');
 		} catch (err: any) {
-			await sweetErrorHandling(err);
+			sweetErrorHandling(err).then();
 		}
 	}, [updateData]);
-
 
 	const doDisabledCheck = () => {
 		if (

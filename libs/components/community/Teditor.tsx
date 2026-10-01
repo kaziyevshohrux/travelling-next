@@ -13,7 +13,7 @@ import { CREATE_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
 
 const TuiEditor = () => {
-	const [createBoardArticle] = useMutation(CREATE_BOARD_ARTICLE);
+	
 	const editorRef = useRef<Editor>(null),
 		token = getJwtToken(),
 		router = useRouter();
@@ -21,6 +21,7 @@ const TuiEditor = () => {
 
 	/** APOLLO REQUESTS **/
 	
+const [createBoardArticle] = useMutation(CREATE_BOARD_ARTICLE);
 
 	const memoizedValues = useMemo(() => {
 		const articleTitle = '',
@@ -153,7 +154,7 @@ const TuiEditor = () => {
 			</Stack>
 
 			<Editor
-				initialValue={'Type here'}
+				initialValue='Type here'
 				placeholder={'Type here'}
 				previewStyle={'vertical'}
 				height={'640px'}

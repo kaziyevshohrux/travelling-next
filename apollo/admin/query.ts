@@ -20,7 +20,7 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberDesc
 				memberWarnings
 				memberBlocks
-				memberProperties
+				memberProducts
 				memberRank
 				memberArticles
 				memberPoints
@@ -39,66 +39,56 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        PRODUCT         *
  *************************/
 
-export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
-	query GetAllPropertiesByAdmin($input: AllPropertiesInquiry!) {
-		getAllPropertiesByAdmin(input: $input) {
+export const GET_ALL_PRODUCTS_BY_ADMIN = gql`
+	query GetAllProductsByAdmin($input: AllProductsInquiry!) {
+		getAllProductsByAdmin(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				productType
+				productStatus
+				productCategory
+				productRegion
+				productAddress
+				productTitle
+				productPrice
+				productCurrency
+				productPriceUnit
+				productBookingType
+				productViews
+				productLikes
+				productComments
+				productRank
+				productImages
+				productDesc
+				productDetails
 				memberId
-				soldAt
 				deletedAt
-				constructedAt
 				createdAt
 				updatedAt
 				memberData {
 					_id
 					memberType
 					memberStatus
-					memberAuthType
-					memberPhone
 					memberNick
 					memberFullName
 					memberImage
-					memberAddress
+					memberPhone
 					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
-					memberPoints
-					memberLikes
-					memberViews
-					deletedAt
-					createdAt
-					updatedAt
-					accessToken
+					memberProducts
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
-			metaCounter {
-				total
-			}
+			metaCounter { total }
 		}
 	}
 `;
-
 /**************************
  *      BOARD-ARTICLE     *
  *************************/
@@ -131,7 +121,7 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberProducts
 					memberRank
 					memberPoints
 					memberLikes
@@ -178,7 +168,7 @@ export const GET_COMMENTS = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberProducts
 					memberRank
 					memberPoints
 					memberLikes

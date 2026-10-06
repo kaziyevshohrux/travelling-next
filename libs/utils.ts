@@ -5,15 +5,13 @@ export const formatterStr = (value: number | undefined): string => {
 	return numeral(value).format('0,0') != '0' ? numeral(value).format('0,0') : '';
 };
 
-export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: string) => {
+export const likeTargetProductHandler = async (likeTargetProduct: any, id: string) => {
 	try {
-		await likeTargetProperty({
-			variables: {
-				input: id,
-			},
+		await likeTargetProduct({
+			variables: { productId: id },
 		});
 	} catch (err: any) {
-		console.log('ERROR, likeTargetPropertyHandler:', err.message);
+		console.log('ERROR, likeTargetProductHandler:', err.message);
 		sweetMixinErrorAlert(err.message).then();
 	}
 };
@@ -21,9 +19,7 @@ export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: str
 export const likeTargetBoardArticleHandler = async (likeTargetBoardArticle: any, id: string) => {
 	try {
 		await likeTargetBoardArticle({
-			variables: {
-				input: id,
-			},
+			variables: { productId: id },
 		});
 	} catch (err: any) {
 		console.log('ERROR, likeTargetBoardArticleHandler:', err.message);
@@ -34,9 +30,7 @@ export const likeTargetBoardArticleHandler = async (likeTargetBoardArticle: any,
 export const likeTargetMemberHandler = async (likeTargetMember: any, id: string) => {
 	try {
 		await likeTargetMember({
-			variables: {
-				input: id,
-			},
+			variables: { productId: id },
 		});
 	} catch (err: any) {
 		console.log('ERROR, likeTargetMemberHandler:', err.message);

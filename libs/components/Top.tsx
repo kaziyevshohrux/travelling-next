@@ -45,7 +45,7 @@ const Top = () => {
 
 	useEffect(() => {
 		switch (router.pathname) {
-			case '/property/detail':
+			case '/products/detail':
 				setBgColor(true);
 				break;
 			default:
@@ -145,17 +145,17 @@ const Top = () => {
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
-				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
+				<Link href={'/products'}>
+					<div>{t('Listings')}</div>
 				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+				<Link href={'/providers'}>
+					<div> {t('Providers')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
 					<div> {t('Community')} </div>
 				</Link>
 				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
+					<div> {t('Support')} </div>
 				</Link>
 			</Stack>
 		);
@@ -173,11 +173,11 @@ const Top = () => {
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/property'}>
-								<div>{t('Properties')}</div>
+							<Link href={'/products'}>
+								<div>{t('Listings')}</div>
 							</Link>
-							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+							<Link href={'/providers'}>
+								<div> {t('Providers')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div> {t('Community')} </div>
@@ -188,7 +188,7 @@ const Top = () => {
 								</Link>
 							)}
 							<Link href={'/cs'}>
-								<div> {t('CS')} </div>
+								<div> {t('Support')} </div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>

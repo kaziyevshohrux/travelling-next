@@ -6,12 +6,12 @@ const Article = () => {
 	const device = useDeviceDetect();
 
 	if (device === 'mobile') {
-		return <div>PROPERTY CARD</div>;
+		return <div>PRODUCT CARD</div>;
 	} else {
 		return (
 			<Stack className="card-config">
 				<Stack className="top">
-					<img src="/img/apartmentMain.png" alt="" />
+					<img src="/img/community/communityImg.png" alt="" />
 					<Box component={'div'} className={'date'}>
 						<Typography>July 28</Typography>
 					</Box>
